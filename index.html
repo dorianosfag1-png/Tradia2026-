@@ -446,9 +446,33 @@ tbody tr:last-child td{border-bottom:none}
 //  TRADIA — Configuration
 //  Remplacez par votre clé API Anthropic : console.anthropic.com
 // ═══════════════════════════════════════════════════════════════════
-'Content-Type': 'application/json',
+try {
+    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20240620',
+        max_tokens: 3000,
+        system: SYSTEM_PROMPT,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: { type: 'base64', media_type: mimeType, data: image }
+            },
+            {
+              type: 'text',
+              text: 'Analyse ce graphique avec toute ta puissance analytique. Si des positions ouvertes sont visibles, donne des instructions précises.’
+            }
+          ]
+        }]
+      })
+    });
 
 // ── PWA
 if ('serviceWorker' in navigator) {
