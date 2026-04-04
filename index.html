@@ -446,7 +446,9 @@ tbody tr:last-child td{border-bottom:none}
 //  TRADIA — Configuration
 //  Remplacez par votre clé API Anthropic : console.anthropic.com
 // ═══════════════════════════════════════════════════════════════════
-const API_KEY = process.env.ANTHROPIC_API_KEY;
+'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
 
 // ── PWA
 if ('serviceWorker' in navigator) {
